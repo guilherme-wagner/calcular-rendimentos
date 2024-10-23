@@ -4,7 +4,7 @@ Este projeto é uma aplicação WEB desenvolvida em Python utilizando o framewor
 
 ## Como Usar
 1. Acesse a aplicação através do link abaixo.
-2. Insira o preço do ativo, a data de pagamento, a quantidade de cotas e o valor recebido.
+2. Insira o(s) nome(s) do(s) ativo(s) e a data de pagamento.
 3. Clique em "Calcular" para visualizar o resultado.
 
 ## Tecnologias Utilizadas
