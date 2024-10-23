@@ -1,6 +1,7 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
+import pytz
 
 # Configurações da aba do navegador
 st.set_page_config(
@@ -37,6 +38,7 @@ def calcular(dividendo, qtd_cotas, valor_fundo_num):
     calculo = (dividendo_cota * 100) / valor_fundo_num
     return calculo
 
+# Quando o botão "Calcular" é clicado
 if bot_calcular:
     # Validações dos inputs
     if not ativo:
@@ -47,6 +49,9 @@ if bot_calcular:
         st.warning("Valor recebido do dividendo não pode ser zero!")
     # Realiza o cálculo se os inputs estiverem corretos
     else:
+        tz = pytz.timezone('America/Sao_Paulo')  # Fuso horário de Brasília (UTC-3)
+        data_pagamento = tz.localize(pd.Timestamp(data_pagamento))
+
         valor_fundo_num = obter_valor_fundo(ativo, data_pagamento)
         if valor_fundo_num is not None:
             rendimento = calcular(dividendo, qtd_cotas, valor_fundo_num)
