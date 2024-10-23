@@ -16,7 +16,7 @@ st.header("Bem-Vindo(a)!!")
 ativo = st.text_input("Digite o nome do ativo (Ex: MXRF11): ").upper()
 if ativo and not ativo.endswith(".SA"):
     ativo += ".SA"
-data_pagamento = st.date_input("Data do pagamento: ")
+data_pagamento = st.date_input("Data do pagamento: ", value=None)
 qtd_cotas = st.number_input("Insira a quantidade de cotas que você possui: ", min_value=1)
 dividendo = st.number_input("Insira o valor recebido do dividendo R$: ", min_value=0.0)
 bot_calcular = st.button("Calcular")
@@ -38,10 +38,14 @@ def calcular(dividendo, qtd_cotas, valor_fundo_num):
     return calculo
 
 if bot_calcular:
+    # Validações dos inputs
     if not ativo:
         st.warning("Por favor, insira um ativo.")
+    elif data_pagamento is None:
+        st.warning("Por favor, selecione uma data.")
     elif dividendo == 0.00:
         st.warning("Valor recebido do dividendo não pode ser zero!")
+    # Realiza o cálculo se os inputs estiverem corretos
     else:
         valor_fundo_num = obter_valor_fundo(ativo, data_pagamento)
         if valor_fundo_num is not None:
