@@ -109,7 +109,7 @@ if st.button("Calcular"):
         tz = pytz.timezone('America/Sao_Paulo')
         data_pagamento = tz.localize(pd.Timestamp(data_pagamento))
 
-        for ativo in ativos:
+        for i, ativo in enumerate(ativos):
             dividendo = obter_dividendo(ativo, data_pagamento)
             if dividendo is None:
                 st.error(f"Não foi possível obter o valor do dividendo para {ativo}! Verifique o nome do ativo e a data.")
@@ -123,9 +123,12 @@ if st.button("Calcular"):
             if valor_fundo_num is not None:
                 total_dividendo = dividendo
                 if calcular_soma_dividendos and quantidade_cotas:
-                    total_dividendo *= quantidade_cotas[0]  # Usar a primeira quantidade se várias forem dadas
+                    # Use a quantidade de cotas correspondente ao ativo atual
+                    quantidade_cota_atual = quantidade_cotas[i] if i < len(quantidade_cotas) else quantidade_cotas[0]
+                    total_dividendo *= quantidade_cota_atual
                     st.session_state.soma_acumulada_dividendos += total_dividendo
 
+                # Calcular rendimento com o dividendo e o preço do ativo na data selecionada
                 rendimento = (dividendo * 100) / valor_fundo_num  # Rendimento por cota
                 st.success(f"Rendimento por cota de {ativo}: {rendimento:.2f}%")
 
