@@ -143,6 +143,11 @@ if st.button("Calcular"):
         if calcular_soma_dividendos:
             st.success(f"Soma acumulada dos dividendos dos ativos consultados: R$ {st.session_state.soma_acumulada_dividendos:.2f}")
 
+# Botão para zerar a soma acumulada
+if st.button("Zerar Soma Acumulada de Dividendos"):
+    st.session_state.soma_acumulada_dividendos = 0.0
+    st.success("Soma acumulada de dividendos zerada com sucesso!")
+
 # Rodapé da página
 st.markdown("---")
 st.markdown("Desenvolvido por: [Guilherme Wagner](https://www.linkedin.com/in/guilherme-wagner)")
