@@ -2,7 +2,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import pytz
-from datetime import datetime
+from datetime import date, timedelta, datetime
 from pdf_report import gerar_pdf
 
 # Configurações da aba do navegador
@@ -21,6 +21,14 @@ data_atual = datetime.now().date()
 # Entradas do Usuário
 col1, col2 = st.columns(2)
 
+def ultimo_dia_util():
+    data = date.today()
+
+    while data.weekday() >= 5:
+        data -= timedelta(days=1)
+
+    return data
+
 with col1:
     ativos_input = st.text_input(
         "Ativos (Ex: SNAG11, PETR3):",
@@ -28,7 +36,9 @@ with col1:
 
 with col2:
     data_pagamento = st.date_input(
-        "Data de pagamento"
+        "Data de pagamento",
+        value=ultimo_dia_util(),
+        max_value=date.today()
     )
 
 # Inicializa a estrutura de dividendos e total acumulado se não estiver no session state
